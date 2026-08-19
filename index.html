@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testfragen Jugendleistungsmarsch Oberfranken</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between antialiased">
+
+  <header class="bg-slate-800/80 backdrop-blur-md border-b border-slate-700/60 sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-red-600/30">
+          <i class="fa-solid font-bold fa-fire-extinguisher"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-white leading-tight">Wissenstest Quiz</h1>
+          <p class="text-xs text-red-400 font-medium">Jugendleistungsmarsch Oberfranken • 100 Testfragen</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button id="btn-restart-nav" onclick="resetToMenu()" class="text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-2 rounded-lg transition flex items-center space-x-1.5 hidden">
+          <i class="fa-solid fa-rotate-left"></i>
+          <span class="hidden sm:inline">Hauptmenü</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-6 w-full flex-grow flex flex-col justify-center">
+
+    <!-- START MENU CARD -->
+    <div id="start-menu" class="bg-slate-800 border border-slate-700/70 rounded-2xl p-6 md:p-8 shadow-2xl">
+      <div class="text-center max-w-xl mx-auto mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-red-500/10 text-red-500 mb-4 border border-red-500/20">
+          <i class="fa-solid fa-fire-flame-curved text-3xl"></i>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Bereit für den Wissenstest?</h2>
+        <p class="text-slate-400 text-sm md:text-base">Wähle einen Modus aus, um dein Wissen aus der Wettbewerbsordnung für das Jugendleistungsabzeichen zu testen.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <button onclick="startQuiz('all')" class="group p-5 bg-slate-700/50 hover:bg-red-600/20 border border-slate-600/60 hover:border-red-500/50 rounded-xl transition text-left flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-red-600/20 group-hover:bg-red-600 text-red-400 group-hover:text-white flex items-center justify-center mb-3 transition">
+              <i class="fa-solid fa-list-check text-lg"></i>
+            </div>
+            <h3 class="font-bold text-white text-base mb-1">Alle 100 Fragen</h3>
+            <p class="text-xs text-slate-400">Kompletter Testfragen-Katalog in Reihenfolge (1 - 100).</p>
+          </div>
+          <span class="mt-4 text-xs font-semibold text-red-400 group-hover:text-red-300 flex items-center space-x-1">
+            <span>Starten</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </span>
+        </button>
+
+        <button onclick="startQuiz(20)" class="group p-5 bg-slate-700/50 hover:bg-red-600/20 border border-slate-600/60 hover:border-red-500/50 rounded-xl transition text-left flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-amber-500/20 group-hover:bg-amber-500 text-amber-400 group-hover:text-slate-900 flex items-center justify-center mb-3 transition">
+              <i class="fa-solid fa-bolt text-lg"></i>
+            </div>
+            <h3 class="font-bold text-white text-base mb-1">20 Zufallsfragen</h3>
+            <p class="text-xs text-slate-400">Ideal für die schnelle Prüfung zwischendurch.</p>
+          </div>
+          <span class="mt-4 text-xs font-semibold text-amber-400 group-hover:text-amber-300 flex items-center space-x-1">
+            <span>Starten</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </span>
+        </button>
+
+        <button onclick="startQuiz(10)" class="group p-5 bg-slate-700/50 hover:bg-red-600/20 border border-slate-600/60 hover:border-red-500/50 rounded-xl transition text-left flex flex-col justify-between">
+          <div>
+            <div class="w-10 h-10 rounded-lg bg-emerald-500/20 group-hover:bg-emerald-500 text-emerald-400 group-hover:text-slate-900 flex items-center justify-center mb-3 transition">
+              <i class="fa-solid fa-clock text-lg"></i>
+            </div>
+            <h3 class="font-bold text-white text-base mb-1">10 Quick-Check</h3>
+            <p class="text-xs text-slate-400">Kurze Lerneinheit mit 10 zufällig gewählten Fragen.</p>
+          </div>
+          <span class="mt-4 text-xs font-semibold text-emerald-400 group-hover:text-emerald-300 flex items-center space-x-1">
+            <span>Starten</span>
+            <i class="fa-solid fa-arrow-right text-[10px]"></i>
+          </span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- QUIZ INTERFACE CARD -->
+    <div id="quiz-card" class="bg-slate-800 border border-slate-700/70 rounded-2xl p-5 md:p-8 shadow-2xl hidden flex-col">
+      <!-- Progress Bar & Stats -->
+      <div class="mb-6">
+        <div class="flex justify-between items-center text-xs md:text-sm font-semibold mb-2">
+          <span id="question-progress" class="text-red-400">Frage 1 von 100</span>
+          <span id="score-counter" class="text-slate-400">Punkte: <span id="score-val" class="text-emerald-400 font-bold">0</span></span>
+        </div>
+        <div class="w-full h-2.5 bg-slate-700 rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-red-600 to-amber-500 w-0 transition-all duration-300 rounded-full"></div>
+        </div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="mb-6 bg-slate-900/70 p-4 md:p-5 rounded-xl border border-slate-700/60">
+        <p id="question-text" class="text-base md:text-lg font-semibold text-white leading-relaxed">
+          Frage lädt...
+        </p>
+      </div>
+
+      <!-- Answers Grid -->
+      <div id="answers-container" class="grid grid-cols-1 gap-3 mb-6">
+        <!-- Buttons injected dynamically -->
+      </div>
+
+      <!-- Footer Action -->
+      <div class="flex justify-between items-center pt-4 border-t border-slate-700/60 min-h-[60px]">
+        <div id="feedback-msg" class="text-sm font-medium"></div>
+        <button id="btn-next" onclick="nextQuestion()" class="ml-auto bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-2.5 rounded-xl transition shadow-lg shadow-red-600/30 flex items-center space-x-2 hidden">
+          <span>Nächste Frage</span>
+          <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- RESULT CARD -->
+    <div id="result-card" class="bg-slate-800 border border-slate-700/70 rounded-2xl p-6 md:p-8 shadow-2xl text-center hidden">
+      <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center border border-red-500/20">
+        <i class="fa-solid fa-trophy text-4xl"></i>
+      </div>
+      <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">Quiz Abgeschlossen!</h2>
+      <p class="text-slate-400 text-sm mb-6">Hier ist deine Auswertung:</p>
+
+      <div class="bg-slate-900/70 rounded-xl p-6 border border-slate-700/60 max-w-sm mx-auto mb-8">
+        <div class="text-4xl md:text-5xl font-black text-white mb-2" id="result-percent">0%</div>
+        <p class="text-sm font-medium text-slate-300 mb-4" id="result-summary">Du hast 0 von 0 Fragen richtig beantwortet.</p>
+        <div id="result-badge" class="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+          Testergebnis
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row justify-center gap-3">
+        <button onclick="resetToMenu()" class="bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold px-6 py-3 rounded-xl transition">
+          <i class="fa-solid fa-house mr-2"></i> Hauptmenü
+        </button>
+        <button onclick="restartCurrentQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-semibold px-6 py-3 rounded-xl transition shadow-lg shadow-red-600/30">
+          <i class="fa-solid fa-rotate-right mr-2"></i> Erneut versuchen
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-slate-800/40 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+    Version 2026
+  </footer>
+
+  <script>
+    const rawQuestions = [
+      {
+        id: 1,
+        question: "1. Aus wie vielen Einsatzkräften besteht eine Löschgruppe?",
+        options: ["a.) 12 Einsatzkräften", "b.) 3 Einsatzkräften", "c.) 9 Einsatzkräften", "d.) 6 Einsatzkräften"],
+        correct: 2
+      },
+      {
+        id: 2,
+        question: "2. Wo kann Wasser ohne Bedenken als Löschmittel verwendet werden?",
+        options: ["a.) bei brennenden Flüssigkeiten", "b.) bei Anwesenheit von ungelöschtem Kalk", "c.) bei brennenden Metallen", "d.) bei brennendem Holz"],
+        correct: 3
+      },
+      {
+        id: 3,
+        question: "3. Wie viele Steckleiterteile dürfen höchsten zusammen gesteckt werden?",
+        options: ["a.) drei Leiterteile", "b.) vier Leiterteile", "c.) zwei Leiterteile", "d.) fünf Leiterteile"],
+        correct: 1
+      },
+      {
+        id: 4,
+        question: "4. Welches Löschgerät soll bei einem kleineren Entstehungsbrand in einem Zimmer eingesetzt werden?",
+        options: ["a.) Kübelspritze", "b.) Schaumrohr", "c.) Kohlendioxid, K6", "d.) B – Rohr mit Stützkrümmer"],
+        correct: 0
+      },
+      {
+        id: 5,
+        question: "5. Wie viele Einsatzkräfte müssen ein BM – Strahlrohr bei Verwendung eines Stützkrümmers mindestens halten?",
+        options: ["a.) Zwei Einsatzkräfte", "b.) Vier Einsatzkräfte", "c.) Drei Einsatzkräfte", "d.) Eine Einsatzkraft"],
+        correct: 0
+      },
+      {
+        id: 6,
+        question: "6. Wer bestimmt den Einsatz eines zweiten C-Rohres?",
+        options: ["a.) Einheitsführer", "b.) Wassertruppführer", "c.) Angriffstruppführer", "d.) Melder"],
+        correct: 0
+      },
+      {
+        id: 7,
+        question: "7. Welche Vorteile hat die Anwendung des Sprühstrahls gegenüber dem Vollstrahl?",
+        options: ["a.) größere Auftreffwucht", "b.) günstigere Verteilung des Wassers, dadurch geringerer Wasserschaden", "c.) größere Eindringtiefe", "d.) größere Wurfweite"],
+        correct: 1
+      },
+      {
+        id: 8,
+        question: "8. Wie sollen gebrauchte, nasse Schläuche transportiert werden?",
+        options: ["a.) einfach gerollt", "b.) in Buchten", "c.) doppelt gerollt", "d.) nicht gerollt"],
+        correct: 0
+      },
+      {
+        id: 9,
+        question: "9. Welcher Trupp ist beim Einsatz der Gruppe vorrangig für die Wasserversorgung bis zum Verteiler verantwortlich (Regelfall)?",
+        options: ["a.) Schlauchtrupp", "b.) Gruppenführer und Melder", "c.) Wassertrupp", "d.) Angriffstrupp"],
+        correct: 2
+      },
+      {
+        id: 10,
+        question: "10. Für welchen Zweck werden C-Druckschläuche vorwiegend verwendet?",
+        options: ["a.) Leitung zwischen Hydrant und Feuerlöschkreiselpumpe", "b.) Auffüllen der Kübelspritze", "c.) Wasserförderung über lange Schlauchstrecken", "d.) Angriff"],
+        correct: 3
+      },
+      {
+        id: 11,
+        question: "11. Wer bestimmt die Lage des Verteilers?",
+        options: ["a.) Schlauchtruppführer", "b.) Einheitsführer", "c.) Angriffstruppführer", "d.) Maschinist"],
+        correct: 1
+      },
+      {
+        id: 12,
+        question: "12. Wer bestimmt die Aufstellung des Löschfahrzeuges an der Einsatzstelle?",
+        options: ["a.) Melder", "b.) Einheitsführer", "c.) Rettungsdienst", "d.) Maschinist"],
+        correct: 1
+      },
+      {
+        id: 13,
+        question: "13. Wo wird die Schlauchreserve verlegt?",
+        options: ["a.) in der Mitte zwischen Verteiler und Strahlrohr", "b.) am Verteiler", "c.) direkt beim vorgehenden Trupp", "d.) an der Feuerlöschkreiselpumpe"],
+        correct: 2
+      },
+      {
+        id: 14,
+        question: "14. Welche Geräte sind zur Inbetriebnahme eines Überflurhydranten erforderlich?",
+        options: ["a.) Überflurhydrantenschlüssel", "b.) Druckbegrenzungsventil", "c.) Verteiler", "d.) Standrohr"],
+        correct: 0
+      },
+      {
+        id: 15,
+        question: "15. Was bedeutet die Bezeichnung 'TSF'?",
+        options: ["a.) Transportfahrzeug für Feuerwehrdienstleistende", "b.) Löschgruppenfahrzeug", "c.) Tragkraftspritzenfahrzeug", "d.) Tankspritzenfahrzeug"],
+        correct: 2
+      },
+      {
+        id: 16,
+        question: "16. Welcher Stoff gehört zur Brandklasse 'A'?",
+        options: ["a.) Propangas", "b.) Magnesium", "c.) Holz", "d.) Benzin"],
+        correct: 2
+      },
+      {
+        id: 17,
+        question: "17. Wo darf Wasser als Löschmittel eingesetzt werden?",
+        options: ["a.) Fettbrand", "b.) Dachstuhlbrand", "c.) Kaminbrand", "d.) Metallbrand"],
+        correct: 1
+      },
+      {
+        id: 18,
+        question: "18. Wer baut beim Einsatz der Löschgruppe die Saugleitung auf (Regelfall)?",
+        options: ["a.) Schlauchtrupp, Angriffstrupp", "b.) Maschinist, Melder, Angriffstrupp", "c.) Wassertrupp, Angriffstrupp", "d.) Wassertrupp, Schlauchtrupp"],
+        correct: 3
+      },
+      {
+        id: 19,
+        question: "19. Wann setzt der Maschinist die B-Leitung bis zum Verteiler unter Druck?",
+        options: ["a.) sobald als möglich", "b.) bei Angriffstrupp; 1. Rohr vor!", "c.) bei Kommando: 'Wasser marsch!' durch den Wassertruppführer", "d.) Wenn der Verbrennungsmotor der Feuerlöschkreiselpumpe läuft"],
+        correct: 2
+      },
+      {
+        id: 20,
+        question: "20. Sie sind bei einer Übung als Wassertruppführer eingeteilt. Was tun Sie zu Beginn der Übung?",
+        options: ["a.) am Verteiler bereitstellen", "b.) sofort zum angenommenen Brandherd vorgehen", "c.) sofort Wasserversorgung aufbauen", "d.) Einsatzbefehl des Einheitsführers abwarten"],
+        correct: 3
+      },
+      {
+        id: 21,
+        question: "21. Wer ist der 'Träger' der Freiwilligen Feuerwehr - Aufstellung, Ausrüstung und Unterhalt?",
+        options: ["a.) der Feuerwehrverein", "b.) der Kommandant", "c.) der Landkreis", "d.) die Gemeinde"],
+        correct: 3
+      },
+      {
+        id: 22,
+        question: "22. Für welche Brände ist das Löschmittel Schaum gut geeignet?",
+        options: ["a.) Brände von Flüssigkeiten", "b.) Brände von Metallen", "c.) Brände von Gasen", "d.) Brände in elektrischen Anlagen"],
+        correct: 0
+      },
+      {
+        id: 23,
+        question: "23. Wo wird das erste C-Rohr am Verteiler angeschlossen?",
+        options: ["a.) Links", "b.) Rechts", "c.) in der Mitte", "d.) am B-Eingang"],
+        correct: 0
+      },
+      {
+        id: 24,
+        question: "24. Wie werden Feuerlöschschläuche grundsätzlich eingeteilt?",
+        options: ["a.) kurze und lange Schläuche", "b.) Angriffsschläuche und Verteidigungsschläuche", "c.) Druckschläuche und Saugschläuche", "d.) weiße und rote Schläuche"],
+        correct: 2
+      },
+      {
+        id: 25,
+        question: "25. Wozu ist ein Standrohr erforderlich?",
+        options: ["a.) zur Wasserentnahme aus Überflurhydranten", "b.) zur Wasserentnahme aus Unterflurhydranten", "c.) zum Zumischen von Schaummitteln", "d.) zur Wasserentnahme aus flachen Gewässern"],
+        correct: 1
+      },
+      {
+        id: 26,
+        question: "26. Welche Wassermenge liefert ein CM-Strahlrohr mit Mundstück-5 bar Strahlrohrdrucks?",
+        options: ["a.) 100 l/min", "b.) 200 l/min", "c.) 400 l/min", "d.) 50 l/min"],
+        correct: 0
+      },
+      {
+        id: 27,
+        question: "27. Mit welchem Knoten muss eine über tragbare Leitern zu rettende Person gesichert werden?",
+        options: ["a.) Kreuzknoten", "b.) Zimmermannsschlag", "c.) Mastwurf", "d.) Brustbund"],
+        correct: 3
+      },
+      {
+        id: 28,
+        question: "28. Wo dürfen Feuerwehranwärter die das 16.Lebensjahr vollendet haben, eingesetzt werden?",
+        options: ["a.) unter Einhaltung weiterer Kriterien außerhalb des unmittelbaren Gefahrenbereichs", "b.) direkt am verunfallten Fahrzeug", "c.) direkt am Brandherd", "d.) ohne Einschränkung"],
+        correct: 0
+      },
+      {
+        id: 29,
+        question: "29. Welche Teile gehören unbedingt zur persönlichen Schutzausrüstung eines Angriffstrupps?",
+        options: ["a.) Feuerwehrschutzanzug, Feuerwehrschutzhandschuhe", "b.) Feuerwehraxt, Brecheisen", "c.) Kübelspritze", "d.) Handscheinwerfer und CM-Strahlrohr"],
+        correct: 0
+      },
+      {
+        id: 30,
+        question: "30. Was gehört nicht zu den Aufgaben der Feuerwehr?",
+        options: ["a.) Retten von Menschen", "b.) Brandbekämpfung", "c.) Hilfe bei Gefahrgutunfällen (Umweltschutz)", "d.) Abschleppen von Kraftfahrzeugen"],
+        correct: 3
+      },
+      {
+        id: 31,
+        question: "31. Wann muss der Feuerwehrhelm nicht getragen werden?",
+        options: ["a.) Unterricht (theoretisch)", "b.) Brandeinsatz", "c.) Einsatz im technischen Hilfsdienst", "d.) Verkehrsabsicherung an einer Einsatzstelle"],
+        correct: 0
+      },
+      {
+        id: 32,
+        question: "32. Welcher Gegenstand ist beim Aufbau der Wasserversorgung aus einem Unterflurhydranten erforderlich?",
+        options: ["a.) Unterflurhydrantenschlüssel", "b.) Mehrzweckleinen", "c.) Druckbegrenzungsventil", "d.) Zumischer"],
+        correct: 0
+      },
+      {
+        id: 33,
+        question: "33. Für welche brennbaren Stoffe ist Wasser ohne Einschränkung als Löschmittel geeignet?",
+        options: ["a.) Teer", "b.) Holz", "c.) Metalle", "d.) Bei überhitzten Fett"],
+        correct: 1
+      },
+      {
+        id: 34,
+        question: "34. Welche Teile gehören unbedingt zur persönlichen Ausrüstung der Feuerwehranwärter?",
+        options: ["a.) Feuerwehrhelm / Jugendschutzhelm", "b.) Krawatte", "c.) C-Schlauch", "d.) Feuerwehraxt"],
+        correct: 0
+      },
+      {
+        id: 35,
+        question: "35. Welche Teile gehören unbedingt zur persönlichen Ausrüstung der Feuerwehranwärter?",
+        options: ["a.) Krawatte", "b.) C-Schlauch", "c.) Feuerwehrstiefel / festes Schuhwerk", "d.) Feuerwehraxt"],
+        correct: 2
+      },
+      {
+        id: 36,
+        question: "36. Welche Teile gehören unbedingt zur persönlichen Ausrüstung der Feuerwehranwärter?",
+        options: ["a.) Feuerwehraxt", "b.) Krawatte", "c.) Feuerwehrschutzhandschuhe", "d.) C-Schlauch"],
+        correct: 2
+      },
+      {
+        id: 37,
+        question: "37. Welche Tätigkeiten dürfen und sollen Feuerwehranwärter ausführen?",
+        options: ["a.) Maßnahmen zur Verkehrsabsicherung durchführen", "b.) an Ausbildungsveranstaltungen teilnehmen", "c.) den Spreizer einsetzen", "d.) als Angriffstrupp bei Brandeinsätzen"],
+        correct: 1
+      },
+      {
+        id: 38,
+        question: "38. Wo werden die Feuerwehrleinen aufbewahrt?",
+        options: ["a.) in besonderen Gerätekisten", "b.) auf dem Dach der Feuerwehrfahrzeuge", "c.) im Feuerwehrleinenbeutel im Mannschaftsraum der Feuerwehrfahrzeuge", "d.) aufgewickelt im Feuerwehrfahrzeug am Pumpenbedienstand"],
+        correct: 2
+      },
+      {
+        id: 39,
+        question: "39. Wann sind Feuerwehrleinen einer Sichtprüfung auf Abnutzung und Fehlerstellen zu unterziehen?",
+        options: ["a.) nur auf Befehl des Kommandanten", "b.) vor jeder Rettungsübung", "c.) mindestens alle 2 Jahre", "d.) Mindestens alle 4 Jahre"],
+        correct: 1
+      },
+      {
+        id: 40,
+        question: "40. Wann sind Feuerwehrleinen einer Sichtprüfung auf Abnutzung und Fehlerstellen zu unterziehen?",
+        options: ["a.) Mindestens alle 4 Jahre", "b.) mindestens alle 2 Jahre", "c.) nur auf Befehl des Kommandanten", "d.) nach jeder Benutzung"],
+        correct: 3
+      },
+      {
+        id: 41,
+        question: "41. Wann sind Feuerwehrleinen einer Sichtprüfung auf Abnutzung und Fehlerstellen zu unterziehen?",
+        options: ["a.) Mindestens alle 4 Jahre", "b.) nur auf Befehl des Kommandanten", "c.) mindestens einmal jährlich", "d.) mindestens alle 2 Jahre"],
+        correct: 2
+      },
+      {
+        id: 42,
+        question: "42. Warum wird bei der Vornahme eines C-Rohrs eine Schlauchreserve verlegt?",
+        options: ["a.) damit kein Verteiler gebraucht wird", "b.) damit sich der Trupp möglichst weit entfernt vom Brandherd aufstellen kann", "c.) damit der Trupp der das Rohr einsetzt beweglich bleibt u. gezielt gegen den Brandherd vorgehen kann", "d.) damit zusätzlich ein weiteres Rohr vorgenommen werden kann"],
+        correct: 2
+      },
+      {
+        id: 43,
+        question: "43. Wer setzt das Standrohr und macht den Hydranten betriebsbereit?",
+        options: ["a.) Einheitsführer", "b.) Maschinist", "c.) Wassertrupp", "d.) Angriffstrupp"],
+        correct: 2
+      },
+      {
+        id: 44,
+        question: "44. Welche Schaltstellungen hat ein genormtes CM-Strahlrohr?",
+        options: ["a.) Vollstrahl, Sprühstrahl", "b.) Sprühstrahl, Halt", "c.) Vollstrahl, Halt", "d.) Vollstrahl, Halt, Sprühstrahl"],
+        correct: 3
+      },
+      {
+        id: 45,
+        question: "45. Wofür wird die Kübelspritze verwendet?",
+        options: ["a.) Löschen von brennbaren Gasen", "b.) Sichern des Atemschutztrupps", "c.) Löschen von einem Papierkorbbrand", "d.) Speicher in Schlauchleitungen"],
+        correct: 2
+      },
+      {
+        id: 46,
+        question: "46. Was sind die Aufgaben des Angriffstrupp beim Löscheinsatz einer Gruppe (Regelfall) mit Bereitstellung?",
+        options: ["a.) C-Druckschläuche für den Wassertrupp verlegen", "b.) Wasserentnahme herrichten", "c.) Wassertrupp beim Aufbau der Schlauchleitung unterstützen", "d.) Retten und Vornahme des ersten Rohres nach Befehl des Gruppenführers"],
+        correct: 3
+      },
+      {
+        id: 47,
+        question: "47. Welche Voraussetzungen müssen erfüllt sein, damit ein Feuer entsteht?",
+        options: ["a.) es muss nur genügend Sauerstoff vorhanden sein", "b.) es muss nur genügend Wärme vorhanden sein", "c.) es muss nur ein brennbarer Stoff vorhanden sein", "d.) es müssen Brennstoff, Sauerstoff und Wärme vorhanden sein"],
+        correct: 3
+      },
+      {
+        id: 48,
+        question: "48. Aus wie vielen Einsatzkräften besteht eine Staffel?",
+        options: ["a.) zwei Einsatzkräften", "b.) sechs Einsatzkräften", "c.) neun Einsatzkräften", "d.) drei Einsatzkräften"],
+        correct: 1
+      },
+      {
+        id: 49,
+        question: "49. Welche Länge hat eine genormte Feuerwehrleine?",
+        options: ["a.) 30 m", "b.) 15 m", "c.) 20 m", "d.) 10 m"],
+        correct: 0
+      },
+      {
+        id: 50,
+        question: "50. Aus wie vielen Einsatzkräften besteht eine Staffel?",
+        options: ["a.) 12 Einsatzkräften", "b.) 3 Einsatzkräften", "c.) 9 Einsatzkräften", "d.) 6 Einsatzkräften"],
+        correct: 3
+      },
+      {
+        id: 51,
+        question: "51. Was gehört nicht zur Regelausstattung von Löschfahrzeugen?",
+        options: ["a.) Strahlrohre", "b.) Tragbare Leitern", "c.) Seilwinde", "d.) Druckschläuche"],
+        correct: 2
+      },
+      {
+        id: 52,
+        question: "52. Was bedeutet die Kurzbezeichnung RW?",
+        options: ["a.) Rettungswagen", "b.) Rettungswache", "c.) Rüstwagen", "d.) Rettungsweste"],
+        correct: 2
+      },
+      {
+        id: 53,
+        question: "53. Mit welcher Besatzung werden Tragkraftspritzenfahrzeuge besetzt?",
+        options: ["a.) Trupp", "b.) Gruppe", "c.) Zug", "d.) Staffel"],
+        correct: 3
+      },
+      {
+        id: 54,
+        question: "54. Welche der nachfolgenden Fahrzeuge gehören zu den Löschgruppenfahrzeugen?",
+        options: ["a.) DLK", "b.) LF 16/12", "c.) RW", "d.) TSA"],
+        correct: 1
+      },
+      {
+        id: 55,
+        question: "55. Welche der nachfolgenden Einsatzarten gehören zu den technischen Hilfeleistungen?",
+        options: ["a.) Wohnungsbrand", "b.) Feuersicherheitswachdienst", "c.) Retten von verschütteten Personen", "d.) Waldbrand"],
+        correct: 2
+      },
+      {
+        id: 56,
+        question: "56. Welche der nachfolgenden Einsatzarten gehören zu den technischen Hilfeleistungen?",
+        options: ["a.) Feuersicherheitswachdienst", "b.) Wohnungsbrand", "c.) Beseitigen von Verkehrshindernissen", "d.) Waldbrand"],
+        correct: 2
+      },
+      {
+        id: 57,
+        question: "57. Welche der nachfolgenden Einsatzarten gehören zu den technischen Hilfeleistungen?",
+        options: ["a.) Wohnungsbrand", "b.) Waldbrand", "c.) Verkehrsunfall", "d.) Feuersicherheitswachdienst"],
+        correct: 2
+      },
+      {
+        id: 58,
+        question: "58. Wo wird das zweite C-Rohr am Verteiler angeschlossen?",
+        options: ["a.) Links", "b.) Rechts", "c.) in der Mitte", "d.) am B-Eingang"],
+        correct: 1
+      },
+      {
+        id: 59,
+        question: "59. Wo wird das dritte C-Rohr am Verteiler angeschlossen?",
+        options: ["a.) Links", "b.) Rechts", "c.) in der Mitte", "d.) am B-Eingang"],
+        correct: 2
+      },
+      {
+        id: 60,
+        question: "60. Mit welcher Besatzung wird die Drehleiter besetzt?",
+        options: ["a.) Trupp", "b.) Gruppe", "c.) Zug", "d.) Staffel"],
+        correct: 0
+      },
+      {
+        id: 61,
+        question: "61. Aus wie vielen Einsatzkräften besteht ein Trupp?",
+        options: ["a.) 12 Einsatzkräften", "b.) 2 Einsatzkräften", "c.) 9 Einsatzkräften", "d.) 6 Einsatzkräften"],
+        correct: 1
+      },
+      {
+        id: 62,
+        question: "62. Welche Schaltstellungen hat ein genormtes BM-Strahlrohr?",
+        options: ["a.) Vollstrahl, Sprühstrahl", "b.) Sprühstrahl, Halt", "c.) Vollstrahl, Halt", "d.) Vollstrahl, Halt, Sprühstrahl"],
+        correct: 3
+      },
+      {
+        id: 63,
+        question: "63. Mit welcher Besatzung wird der Rüstwagen besetzt?",
+        options: ["a.) Trupp", "b.) Gruppe", "c.) Zug", "d.) Staffel"],
+        correct: 0
+      },
+      {
+        id: 64,
+        question: "64. Wo wird das dritte Rohr oder Sonderrohr am Verteiler angeschlossen?",
+        options: ["a.) Links", "b.) Rechts", "c.) in der Mitte", "d.) am B-Eingang"],
+        correct: 2
+      },
+      {
+        id: 65,
+        question: "65. Mit welcher Besatzung werden Löschgruppenfahrzeuge besetzt?",
+        options: ["a.) Trupp", "b.) Gruppe", "c.) Zug", "d.) Staffel"],
+        correct: 1
+      },
+      {
+        id: 66,
+        question: "66. Welche der nachfolgenden Teile werden nicht bei der Verkehrsabsicherung verwendet?",
+        options: ["a.) Warnweste", "b.) Warnleuchte", "c.) Handsäge", "d.) Warndreiecke / Faltsignale"],
+        correct: 2
+      },
+      {
+        id: 67,
+        question: "67. Welche Aufgaben hat der Melder in einer Löschgruppe?",
+        options: ["a.) Nachrichten, Befehle u. Rückmeldungen übermitteln", "b.) Vornahme des ersten Rohres", "c.) Immer am Funkgerät bleiben", "d.) Setzen des Standrohres"],
+        correct: 0
+      },
+      {
+        id: 68,
+        question: "68. Wofür kann eine Brechstange nicht verwendet werden?",
+        options: ["a.) Schneiden von Materialien", "b.) Ausheben einer Tür aus den Angeln", "c.) Sprengen von Ketten", "d.) Aufsprengen einer verklemmten Autotür"],
+        correct: 0
+      },
+      {
+        id: 69,
+        question: "69. Wie werden einsatzbereite Druckschläuche in Feuerwehrfahrzeugen aufbewahrt?",
+        options: ["a.) als doppelt gerollte Schläuche in den Fächern", "b.) als Rollschläuche in den eigentlich für tragbare Schlauchhaspeln vorgesehenen Fächern", "c.) als einfach gerollte Schläuche in den Fächern", "d.) am Boden des Mannschaftsraums"],
+        correct: 0
+      },
+      {
+        id: 70,
+        question: "70. Wie werden einsatzbereite Druckschläuche in Feuerwehrfahrzeugen aufbewahrt?",
+        options: ["a.) als Rollschläuche in den eigentlich für tragbare Schlauchhaspeln vorgesehenen Fächern", "b.) in Buchten; z.B. Schlauchwagen", "c.) am Boden des Mannschaftsraums", "d.) als einfach gerollte Schläuche in den Fächern"],
+        correct: 1
+      },
+      {
+        id: 71,
+        question: "71. Wie werden einsatzbereite Druckschläuche in Feuerwehrfahrzeugen aufbewahrt?",
+        options: ["a.) als einfach gerollte Schläuche in den Fächern", "b.) am Boden des Mannschaftsraums", "c.) In Schlauchtragekörben oder auf Schlauchhaspeln", "d.) als Rollschläuche in den eigentlich für tragbare Schlauchhaspeln vorgesehenen Fächern"],
+        correct: 2
+      },
+      {
+        id: 72,
+        question: "72. Für welchen Zweck werden B-Druckschläuche vornehmlich verwendet?",
+        options: ["a.) Schnellangriffseinrichtung", "b.) Angriff bei großen Wasserbedarf", "c.) Zum Ansaugen aus offenen Gewässer", "d.) Löschen von kleinen Bränden"],
+        correct: 1
+      },
+      {
+        id: 73,
+        question: "73. Welche Kosten entstehen bei einem Notruf über das Mobiltelefon?",
+        options: ["a.) Notrufe kosten in allen Mobilfunknetzen bis zu 5 Cent", "b.) Notruf ist im Mobilfunknetz kostenfrei", "c.) Notrufe sind nur im Telekomnetz (D1) kostenfrei", "d.) Notrufe kosten in allen Mobilfunknetzen bis zu 18 Cent"],
+        correct: 1
+      },
+      {
+        id: 74,
+        question: "74. Was trifft auf eine Verbrennung zweiten Grades zu?",
+        options: ["a.) Rötung, Schwellung", "b.) Grau-schwarz-weiße lederartige Hautgebiete", "c.) Rötung, starke Schmerzen, Schwellung und evt. Blasenbildung", "d.) Tiefgreifende Zerstörung der Haut"],
+        correct: 2
+      },
+      {
+        id: 75,
+        question: "75. Eine bewusstlose Person blutet stark aus Mund und Nase. Wie ist diese Person zu lagern?",
+        options: ["a.) Stabile Seitenlage", "b.) Aufrechte Sitzposition", "c.) Lagerung spielt keine Rolle", "d.) Schocklage"],
+        correct: 0
+      },
+      {
+        id: 76,
+        question: "76. Welches ist ein Erkennungsmerkmal für einen Schock?",
+        options: ["a.) Person wirkt aufgedreht und sehr lustig", "b.) Gesichtsrötung", "c.) Kalte oft schweißnasse und blasse Haut, Unruhe", "d.) Nur blasse Haut"],
+        correct: 2
+      },
+      {
+        id: 77,
+        question: "77. Warum wird bei der stabilen Seitenlage der Hals leicht gestreckt?",
+        options: ["a.) Weil es besser aus sieht", "b.) Damit die Zunge nicht die Atemwege verschließt oder Flüssigkeiten in die Luftröhre gelangen", "c.) Damit der Betroffene bequem liegt", "d.) Weil es für die spätere Genesung wichtig ist"],
+        correct: 1
+      },
+      {
+        id: 78,
+        question: "78. Welche Maßnahme zur Schockbekämpfung ist richtig?",
+        options: ["a.) Betroffenen nach Hause begleiten", "b.) Betroffenen immer kühl lagern", "c.) Betroffenen auf einen Stuhl setzen", "d.) Betroffenen in die Schocklage bringen und betreuen"],
+        correct: 3
+      },
+      {
+        id: 79,
+        question: "79. Ist der Missbrauch eines Notrufs grundsätzlich strafbar?",
+        options: ["a.) Ja", "b.) Bei einmaligem Missbrauch nicht", "c.) Nein", "d.) Ab dem 65 Lebensjahr nicht mehr"],
+        correct: 0
+      },
+      {
+        id: 80,
+        question: "80. Wann muss die stabile Seitenlage durchgeführt werden?",
+        options: ["a.) Wenn keine Atmung vorhanden ist", "b.) Wenn der Untergrund uneben ist", "c.) Die stabile Seitenlage muss immer durchgeführt werden", "d.) Wenn der Patient bewusstlos und die ausreichende Atmung vorhanden ist"],
+        correct: 3
+      },
+      {
+        id: 81,
+        question: "81. Welche Maßnahmen bei kleineren Verbrennungen / Verbrühungen sind richtig?",
+        options: ["a.) Betroffene Hautpartien wärmen", "b.) Auf keinen Fall mit Wasser kühlen", "c.) Sofort die betroffene Hautpartien mit fließendem kaltem Wasser max. 10 Minuten kühlen", "d.) Betroffene Hautpartien mit Puder, Mehl bedecken"],
+        correct: 2
+      },
+      {
+        id: 82,
+        question: "82. Welche Aussage ist richtig?",
+        options: ["a.) Nur Erwachsene müssen Hilfe leisten", "b.) Niemand ist dazu verpflichtet Hilfe zu leisten", "c.) Bei einem Unfall muss jeder im Rahmen seiner Möglichkeit helfen", "d.) Nur im Alter zwischen 14 und 63 Jahren ist man zur Hilfe verpflichtet"],
+        correct: 2
+      },
+      {
+        id: 83,
+        question: "83. Welche der genannten Maßnahmen ist bei der Versorgung eines Stromunfallopfers zuerst durchzuführen?",
+        options: ["a.) Atemkontrolle", "b.) Stabile Seitenlage", "c.) Sicherstellen, dass Patient und Arbeitsumgebung frei von elektr. Spannung sind", "d.) keine der Antworten ist richtig"],
+        correct: 2
+      },
+      {
+        id: 84,
+        question: "84. Welche Maßnahme muss beim Entdecken eines Brandes frühzeitig getroffen werden?",
+        options: ["a.) Immer sofort mit den Löscharbeiten beginnen", "b.) Sofort die Feuerwehr über Notruf 112 alarmieren", "c.) Fenster und Türen öffnen, damit Rauch abziehen kann", "d.) Feuerlöscher suchen, Nachbarn informieren"],
+        correct: 1
+      },
+      {
+        id: 85,
+        question: "85. Welche Maßnahmen werden mit der \"Hilfskette\" beschrieben?",
+        options: ["a.) Eigenschutz, Absichern, Sofortmaßnahmen, Notruf absetzen und weitere Hilfsmaßnahmen", "b.) Feuerwehr alarmieren, Rettungsdienst alarmieren, Polizei alarmieren", "c.) Ruhe bewahren, erkennen was geschehen ist und handeln", "d.) Rettungsfahrzeuge stellen sich in einer Kette auf"],
+        correct: 0
+      },
+      {
+        id: 86,
+        question: "86. Welche Funktion hat der rote Druckknopfmelder mit der Aufschrift \"Feuerwehr\"?",
+        options: ["a.) Er löst eine Löschanlage aus", "b.) Er löst einen Hausalarm aus", "c.) Er löst eine Alarmmeldung in der Brandmeldezentrale aus", "d.) Er stellt eine Telefonverbindung zur Feuerwehr her"],
+        correct: 2
+      },
+      {
+        id: 87,
+        question: "87. Wie sind Verätzungen durch Säuren oder Laugen zu behandeln?",
+        options: ["a.) Wunde mit sauberem Wolltuch abdecken", "b.) Wunde mit wasserfestem Pflaster abdecken", "c.) Wunde nicht behandeln", "d.) Wunde mit klarem handwarmen Wasser spülen; gesunde Hauptpartie schützen und Ausbreitung auf gesunde Haut vermeiden"],
+        correct: 3
+      },
+      {
+        id: 88,
+        question: "88. Welche Nummer ist die europaweite Notrufnummer für Feuerwehr und Rettungsdienst?",
+        options: ["a.) 112", "b.) 110", "c.) 911", "d.) 19222"],
+        correct: 0
+      },
+      {
+        id: 89,
+        question: "89. mit 53% ereignen sich die meisten Unfälle in Deutschland im .....",
+        options: ["a.) Schulbereich", "b.) Haus- und Freizeitbereich", "c.) Straßenverkehr", "d.) Am Arbeitsplatz"],
+        correct: 1
+      },
+      {
+        id: 90,
+        question: "90. Worauf ist beim Notruf über ein Handy unterwegs besonders zu achten?",
+        options: ["a.) Mitteilen was man gerade macht", "b.) Möglichst genaue Ortsangaben", "c.) Genau mitteilen wie man sich gerade fühlt", "d.) Das der Akku immer vollgeladen ist"],
+        correct: 1
+      },
+      {
+        id: 91,
+        question: "91. Wo findet man Notrufsäulen?",
+        options: ["a.) An Autobahnen", "b.) Nur in Krankenhäusern", "c.) Auf allen Straßen im Abstand von 2,5 km", "d.) Auf Bundesstraßen"],
+        correct: 0
+      },
+      {
+        id: 92,
+        question: "92. Welchen Grundsatz darf man als Helfer nie vergessen?",
+        options: ["a.) Ich darf tun was ich will", "b.) Ich tue nur was mir gesagt wird", "c.) Ich achte auf meinen Eigenschutz", "d.) Ich achte darauf, dass keine Kosten entstehen"],
+        correct: 2
+      },
+      {
+        id: 93,
+        question: "93. Welche Aussage zu Rauchwarnmeldern ist richtig?",
+        options: [
+          "a.) Sie sind ausschließlich dazu da, Sachschäden durch das Feuer zu verringern",
+          "b.) Rauchwarnmelder dienen hauptsächlich der Beobachtung des Rauches bei einem Brand",
+          "c.) Sie haben die vorrangige Aufgabe Personen, die sich in Räumen aufhalten, vor Rauch zu warnen",
+          "d.) Rauchwarnmelder sind nur in öffentlichen Gebäuden zu finden"
+        ],
+        correct: 2
+      },
+      {
+        id: 94,
+        question: "94. Welche Aussage zur Betreuung eines Betroffenen ist richtig?",
+        options: [
+          "a.) Wenn ein Betroffener nicht blutet oder schreit, muss man sich nicht um ihn kümmern",
+          "b.) Je lauter der Betroffene schreit, desto mehr muss ich mich um ihn kümmern",
+          "c.) Man sollte die Betroffenen vor den Blicken von Schaulustigen abschirmen",
+          "d.) Unverletzte Betroffene sollte man auf jeden Fall umarmen und fest drücken, auch wenn Sie das nicht möchten"
+        ],
+        correct: 2
+      },
+      {
+        id: 95,
+        question: "95. Ein Mitschüler stürzt auf der Schultreppe und klagt über starke Schmerzen im Handgelenk. Was tust Du?",
+        options: [
+          "a.) Ich gehe weiter und ignoriere ihn",
+          "b.) Ich hole sofort Hilfe",
+          "c.) Ich schaue mir das alles mal an und erzähle dann davon",
+          "d.) Sofort Bilder machen und an Freunde schicken"
+        ],
+        correct: 1
+      },
+      {
+        id: 96,
+        question: "96. Warum wird bei einer schweren Augenverletzung ein Verband über beide Augen angelegt?",
+        options: [
+          "a.) Der Verletzte wird dadurch allgemein ruhiger",
+          "b.) Damit kein Passant die Verletzung sieht",
+          "c.) Weil die Sehkraft durch das Eindringen von Krankheitserregern über beide Augen gefährdet ist",
+          "d.) Beide Augen bewegen sich meist gleich"
+        ],
+        correct: 3
+      },
+      {
+        id: 97,
+        question: "97. Jemand hat Nasenbluten. Wie helfe ich dieser Person?",
+        options: [
+          "a.) Hinlegen, Nase zuhalten, Blut runterschlucken lassen",
+          "b.) Hinsetzen, Kopf nach hinten, Eis in den Mund",
+          "c.) Kopf nach hinten, Eis in den Nacken, Blut runterschlucken lassen",
+          "d.) Aufrecht hinsetzen, Kopf nach vorne hängenlassen und Nacken kühlen"
+        ],
+        correct: 3
+      },
+      {
+        id: 98,
+        question: "98. Worauf muss man beim Spülen einer verätzten Wunde achten?",
+        options: [
+          "a.) Verätzungen werden nicht gespült",
+          "b.) Säureverätzungen werden mit Spülmittel gespült",
+          "c.) Verätzungen werden grundsätzlich mit Milch gespült",
+          "d.) Die Spülflüssigkeit muss frei und mit möglichst wenig Kontakt zur gesunden Haut und weg vom Auge ablaufen können"
+        ],
+        correct: 3
+      },
+      {
+        id: 99,
+        question: "99. Wie war das nochmal mit Herz - Lungen - Wiederbelebung bei Erwachsenen und Jugendlichen?",
+        options: [
+          "a.) 5 Herzmassagen - 1 Beatmung",
+          "b.) 15 Herzmassagen - 5 Beatmungen",
+          "c.) 30 Herzmassagen - 2 Beatmungen",
+          "d.) 10 Herzmassagen - 1 Beatmung"
+        ],
+        correct: 2
+      },
+      {
+        id: 100,
+        question: "100. Jemand hat 1/4 Liter Spülmittel getrunken. Was machst du jetzt?",
+        options: [
+          "a.) Den Mund ausspülen und den Notarzt rufen",
+          "b.) Ich versuche, mit dem Finger Erbrechen auszulösen",
+          "c.) Ich gebe dem Betroffenen ein paar Löffel Milch, um die Säure zu neutralisieren",
+          "d.) Atmung kontrollieren, nicht zum erbrechen bringen, sofort Notruf absetzen"
+        ],
+        correct: 3
+      }
+    ];
+
+    let currentQuizQuestions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let answered = false;
+    let currentMode = 'all';
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function startQuiz(mode) {
+      currentMode = mode;
+      if (mode === 'all') {
+        currentQuizQuestions = [...rawQuestions];
+      } else if (typeof mode === 'number') {
+        currentQuizQuestions = shuffleArray(rawQuestions).slice(0, mode);
+      }
+
+      currentIndex = 0;
+      score = 0;
+      answered = false;
+
+      document.getElementById('start-menu').classList.add('hidden');
+      document.getElementById('result-card').classList.add('hidden');
+      document.getElementById('quiz-card').classList.remove('hidden');
+      document.getElementById('quiz-card').classList.add('flex');
+      document.getElementById('btn-restart-nav').classList.remove('hidden');
+
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      if (currentIndex >= currentQuizQuestions.length) {
+        showResults();
+        return;
+      }
+
+      answered = false;
+      const q = currentQuizQuestions[currentIndex];
+
+      // Update UI Counters
+      document.getElementById('question-progress').textContent = `Frage ${currentIndex + 1} von ${currentQuizQuestions.length}`;
+      document.getElementById('score-val').textContent = score;
+
+      const progressPercent = ((currentIndex) / currentQuizQuestions.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+      // Question Text
+      document.getElementById('question-text').textContent = q.question;
+
+      // Feedback Reset
+      const feedbackEl = document.getElementById('feedback-msg');
+      feedbackEl.className = "text-sm font-semibold";
+      feedbackEl.innerHTML = "";
+
+      // Hide Next Button
+      document.getElementById('btn-next').classList.add('hidden');
+
+      // Answers Container
+      const answersContainer = document.getElementById('answers-container');
+      answersContainer.innerHTML = '';
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left p-4 rounded-xl border border-slate-700 bg-slate-800/80 hover:bg-slate-700/80 hover:border-slate-500 transition font-medium text-sm md:text-base flex items-start space-x-3 text-slate-200`;
+        
+        btn.innerHTML = `
+          <span class="w-6 h-6 rounded-lg bg-slate-700 flex items-center justify-center text-xs text-slate-300 font-bold shrink-0 mt-0.5">${String.fromCharCode(65 + idx)}</span>
+          <span class="flex-grow">${opt}</span>
+        `;
+
+        btn.onclick = () => selectAnswer(idx);
+        answersContainer.appendChild(btn);
+      });
+    }
+
+    function selectAnswer(selectedIndex) {
+      if (answered) return;
+      answered = true;
+
+      const q = currentQuizQuestions[currentIndex];
+      const buttons = document.getElementById('answers-container').children;
+      const feedbackEl = document.getElementById('feedback-msg');
+
+      for (let i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
+        buttons[i].classList.remove('hover:bg-slate-700/80', 'hover:border-slate-500');
+        buttons[i].classList.add('cursor-not-allowed');
+      }
+
+      if (selectedIndex === q.correct) {
+        score++;
+        document.getElementById('score-val').textContent = score;
+        buttons[selectedIndex].classList.remove('bg-slate-800/80', 'border-slate-700');
+        buttons[selectedIndex].classList.add('bg-emerald-600/20', 'border-emerald-500', 'text-emerald-300');
+        
+        feedbackEl.className = "text-emerald-400 font-bold text-sm flex items-center space-x-2";
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-lg"></i><span>Richtig beantwortet!</span>`;
+      } else {
+        buttons[selectedIndex].classList.remove('bg-slate-800/80', 'border-slate-700');
+        buttons[selectedIndex].classList.add('bg-red-600/20', 'border-red-500', 'text-red-300');
+
+        buttons[q.correct].classList.remove('bg-slate-800/80', 'border-slate-700');
+        buttons[q.correct].classList.add('bg-emerald-600/20', 'border-emerald-500', 'text-emerald-300');
+
+        feedbackEl.className = "text-red-400 font-bold text-sm flex items-center space-x-2";
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-lg"></i><span>Falsch! Richtig ist Antwort ${String.fromCharCode(65 + q.correct)}.</span>`;
+      }
+
+      document.getElementById('btn-next').classList.remove('hidden');
+    }
+
+    function nextQuestion() {
+      currentIndex++;
+      renderQuestion();
+    }
+
+    function showResults() {
+      document.getElementById('quiz-card').classList.add('hidden');
+      document.getElementById('quiz-card').classList.remove('flex');
+      document.getElementById('result-card').classList.remove('hidden');
+
+      const total = currentQuizQuestions.length;
+      const percent = Math.round((score / total) * 100);
+
+      document.getElementById('result-percent').textContent = `${percent}%`;
+      document.getElementById('result-summary').textContent = `Du hast ${score} von ${total} Fragen richtig beantwortet.`;
+
+      const badge = document.getElementById('result-badge');
+      if (percent >= 80) {
+        badge.className = "inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-emerald-500/20 text-emerald-400 border border-emerald-500/30";
+        badge.textContent = "Bestanden - Super Ergebnis!";
+      } else if (percent >= 50) {
+        badge.className = "inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-amber-500/20 text-amber-400 border border-amber-500/30";
+        badge.textContent = "Gut - Noch etwas Übung nötig";
+      } else {
+        badge.className = "inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-red-500/20 text-red-400 border border-red-500/30";
+        badge.textContent = "Nicht bestanden - Gleich nochmal üben!";
+      }
+
+      document.getElementById('progress-bar').style.width = '100%';
+    }
+
+    function resetToMenu() {
+      document.getElementById('quiz-card').classList.add('hidden');
+      document.getElementById('quiz-card').classList.remove('flex');
+      document.getElementById('result-card').classList.add('hidden');
+      document.getElementById('start-menu').classList.remove('hidden');
+      document.getElementById('btn-restart-nav').classList.add('hidden');
+    }
+
+    function restartCurrentQuiz() {
+      startQuiz(currentMode);
+    }
+  </script>
+</body>
+</html>
